@@ -1,7 +1,7 @@
 # Application Architecture: Store Copilot
 
 ## Overview
-Store Copilot is a real-time, AI-augmented retail operations dashboard. It integrates inventory management, executive analytics, and live store operations into a single cohesive interface.
+Store Copilot is an **Active Intelligence Engine** designed for real-time, AI-augmented retail operations. It addresses the "Semantic Deficit" and "Accessibility Gap" by integrating inventory management, executive analytics, and live store operations into a single cohesive, semantically-unified interface.
 
 ## Tech Stack
 - **Frontend**: React (Vite) + Tailwind CSS + Lucide Icons + Framer Motion (Animations)
