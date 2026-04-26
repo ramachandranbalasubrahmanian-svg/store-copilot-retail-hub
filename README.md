@@ -29,9 +29,16 @@ Detailed documentation and system diagrams can be found in [ARCHITECTURE.md](./A
 1. **Setup Firebase**:
    - Create a Firebase project.
    - Enable Firestore and Google Authentication.
-   - Update `firebase-applet-config.json` with your credentials.
+   - Create a `.env` file based on `.env.example` and populate it with your Firebase credentials.
+    - Alternatively, you can update `firebase-applet-config.json` with your credentials for local development, but ensure it is not committed if you want to avoid security alerts.
 
-2. **Install Dependencies**:
+2. **Environment Variables**:
+   For the app to work, ensure you set the following in your environment or a `.env` file:
+   - `VITE_FIREBASE_API_KEY`
+   - `VITE_FIREBASE_PROJECT_ID`
+   - (And other `VITE_FIREBASE_*` variables listed in `.env.example`)
+
+3. **Install Dependencies**:
    ```bash
    npm install
    ```
