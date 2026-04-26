@@ -1,0 +1,114 @@
+{
+  "entities": {
+    "MetricHistory": {
+      "title": "Revenue History Point",
+      "description": "Historical revenue data point for charts.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "value": { "type": "number" }
+      },
+      "required": ["name", "value"]
+    },
+    "InventoryHealth": {
+      "title": "Inventory Health Category",
+      "description": "Stock status for a product category.",
+      "type": "object",
+      "properties": {
+        "category": { "type": "string" },
+        "stockout": { "type": "number" },
+        "overstock": { "type": "number" }
+      },
+      "required": ["category", "stockout", "overstock"]
+    },
+    "CustomerSegment": {
+      "title": "Customer Segment",
+      "description": "Percentage distribution of customers.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "value": { "type": "number" }
+      },
+      "required": ["name", "value"]
+    },
+    "Metrics": {
+      "title": "System Metrics",
+      "description": "Global performance indicators.",
+      "type": "object",
+      "properties": {
+        "dailyRevenue": { "type": "number" },
+        "revenueTarget": { "type": "number" },
+        "revenueTrend": { "type": "string" },
+        "revenueHistory1H": { "type": "array", "items": { "$ref": "#/entities/MetricHistory" } },
+        "revenueHistory24H": { "type": "array", "items": { "$ref": "#/entities/MetricHistory" } },
+        "revenueHistory7D": { "type": "array", "items": { "$ref": "#/entities/MetricHistory" } },
+        "storeOps": {
+          "type": "object",
+          "properties": {
+            "occupancy": { "type": "number" },
+            "staffCount": { "type": "number" },
+            "trafficTrend": { "type": "string" },
+            "dataCapacity": { "type": "number" },
+            "queues": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string" },
+                  "name": { "type": "string" },
+                  "wait": { "type": "number" },
+                  "status": { "type": "string" }
+                }
+              }
+            },
+            "tasks": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": { "type": "string" },
+                  "label": { "type": "string" },
+                  "priority": { "type": "string" },
+                  "status": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "stockoutRate": { "type": "number" },
+        "overstockValue": { "type": "number" },
+        "inventoryHealth": { "type": "array", "items": { "$ref": "#/entities/InventoryHealth" } },
+        "active30d": { "type": "number" },
+        "churnRisk": { "type": "number" },
+        "nps": { "type": "number" },
+        "customerSegments": { "type": "array", "items": { "$ref": "#/entities/CustomerSegment" } }
+      }
+    },
+    "Recommendation": {
+      "title": "AI Recommendation",
+      "description": "Actionable insight from the AI layer.",
+      "type": "object",
+      "properties": {
+        "sku": { "type": "string" },
+        "type": { "type": "string", "enum": ["MARKDOWN", "REDISTRIBUTE", "PRICING"] },
+        "description": { "type": "string" },
+        "recommendation": { "type": "string" },
+        "impact": { "type": "string" },
+        "confidence": { "type": "number" },
+        "status": { "type": "string", "enum": ["PENDING", "EXECUTED", "IGNORED"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["sku", "type", "description", "recommendation", "impact", "confidence", "status"]
+    }
+  },
+  "firestore": {
+    "config/metrics": {
+      "schema": "Metrics",
+      "description": "Global performance metrics snapshot."
+    },
+    "recommendations": {
+      "schema": "Recommendation",
+      "description": "List of active AI insights."
+    }
+  }
+}

@@ -1,0 +1,52 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Metrics Rules
+    match /config/metrics {
+      allow read: if isSignedIn();
+      allow write: if isSignedIn(); // In a real app, only system/admin
+    }
+
+    // Recommendations Rules
+    match /recommendations/{recId} {
+      function isValidRecommendation(data) {
+        return data.sku is string && data.sku.size() <= 100 &&
+               data.type in ['MARKDOWN', 'REDISTRIBUTE', 'PRICING'] &&
+               data.description is string && data.description.size() <= 500 &&
+               data.recommendation is string && data.recommendation.size() <= 200 &&
+               data.impact is string && data.impact.size() <= 200 &&
+               data.confidence is number && data.confidence >= 0 && data.confidence <= 1 &&
+               data.status in ['PENDING', 'EXECUTED', 'IGNORED'];
+      }
+
+      allow read: if isSignedIn();
+      allow create: if isSignedIn() && isValidRecommendation(incoming());
+      allow update: if isSignedIn() && isValidRecommendation(incoming()) && (
+        // Only allow status changes during standard use
+        incoming().diff(existing()).affectedKeys().hasOnly(['status'])
+      );
+      allow delete: if isSignedIn();
+    }
+  }
+}

@@ -1,11 +1,39 @@
-<div align="center">
+# Store Copilot - Intelligent Retail Management
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+Store Copilot is a next-generation retail operations platform designed to bridge the gap between executive strategy and store-floor execution.
 
-  <h1>Built with AI Studio</h2>
+## 🚀 Features
+- **📊 Executive Suite**: Real-time revenue tracking and forecasting.
+- **📦 Inventory workbench**: Automated stockout alerts and overstock reduction.
+- **⚡ Store Operations**: Live occupancy tracking, wait-time analytics, and task management.
+- **🔄 Live Sync**: Powered by Firebase for instant updates across the store.
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## 🛠 Tech Stack
+- React 18 / Vite
+- Tailwind CSS
+- Firebase (Firestore & Auth)
+- Framer Motion
+- Recharts
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+## 📖 Architecture
+Detailed documentation and system diagrams can be found in [ARCHITECTURE.md](./ARCHITECTURE.md).
 
-</div>
+## 💻 Getting Started
+
+1. **Setup Firebase**:
+   - Create a Firebase project.
+   - Enable Firestore and Google Authentication.
+   - Update `firebase-applet-config.json` with your credentials.
+
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
+
+3. **Run Development Server**:
+   ```bash
+   npm run dev
+   ```
+
+## 📄 License
+MIT
